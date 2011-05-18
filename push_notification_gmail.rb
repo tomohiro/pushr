@@ -39,7 +39,6 @@ loop do
 
   if head < get
     head = get
-    puts ENV['USER']
     `curl -d 'message=#{title}' http://im.kayac.com/api/post/#{config[:username]}`
   end
 
