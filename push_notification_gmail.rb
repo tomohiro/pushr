@@ -34,13 +34,15 @@ loop do
   xml = Nokogiri::XML(responce)
   mail = (xml/'entry').first
 
-  title = "[Gmail] #{(mail/'title').text}"
-  get   = Time.parse (mail/'modified').text
+  if mail
+    title = "[Gmail] #{(mail/'title').text}"
+    get   = Time.parse (mail/'modified').text
 
-  if head < get
-    head = get
-    `curl -d 'message=#{title}' http://im.kayac.com/api/post/#{config[:username]}`
+    if head < get
+      head = get
+      `curl -d 'message=#{title}' http://im.kayac.com/api/post/#{config[:username]}`
+    end
   end
 
-  sleep 60
+  sleep 30
 end
