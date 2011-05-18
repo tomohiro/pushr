@@ -8,6 +8,7 @@ Required
 - [im.kayac.com](http://im.kayac.com/) Account
 - Ruby 1.9.2
 - [Bundler](http://gembundler.com/)
+- See Gemfile
 
 
 Getting Started
