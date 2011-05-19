@@ -17,7 +17,7 @@ config = Pit.get('push.gmail.com', :require => {
 })
 
 logger = Logger.new STDOUT
-logger.level = Logger::DEBUG
+logger.level = Logger::INFO
 
 begin
   gmail = Net::IMAP.new 'imap.gmail.com', 993, true, nil, false
