@@ -14,11 +14,11 @@ Required
 Getting Started
 --------------------------------------------------------------------------------
 
-### Install
+### Installation
 
     $ git clone git://github.com/Tomohiro/push_notification_gmail.git push_notification_gmail
     $ cd push_notification_gmail
-    $ bundle install --path=vendor/bundle
+    $ bundle install --path vendor/bundle
 
 
 ### Run

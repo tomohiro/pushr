@@ -1,48 +1,59 @@
 #!/usr/bin/env ruby
- 
-require 'net/https'
+
+require 'net/imap'
+require 'kconv'
 require 'time'
+require 'logger'
+
 require 'rubygems'
-require 'nokogiri'
 require 'pit'
 
 ENV['EDITOR'] = 'vi' if ENV['EDITOR'].nil?
 
 config = Pit.get('push.gmail.com', :require => {
-  :email    => 'your email in gmail',
+  :email    => 'yourname@gmail.com',
   :password => 'your password in gmail',
   :username => 'your username in im.kayac.com'
 })
 
+logger = Logger.new STDOUT
+logger.level = Logger::DEBUG
 
-proxy = ENV['https_proxy'] || ENV['http_proxy']
-if proxy
-  https = Net::HTTP::Proxy(URI.parse(proxy).host, URI.parse(proxy).port).new('mail.google.com', 443)
-else
-  https = Net::HTTP.new('mail.google.com', 443)
-end
-https.use_ssl = true
-https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+begin
+  gmail = Net::IMAP.new 'imap.gmail.com', 993, true, nil, false
+    logger.info 'Connect Gmail'
 
-head = Time.now.utc
+  gmail.login config[:email], config[:password]
+    logger.info "Login #{config[:email]}"
 
-loop do
-  request = Net::HTTP::Get.new('/mail/feed/atom')
-  request.basic_auth(config[:email], config[:password])
-  responce = https.request(request).body
+  head = nil
 
-  xml = Nokogiri::XML(responce)
-  mail = (xml/'entry').first
+  loop do
+    gmail.select 'INBOX'
+      logger.debug 'Select inbox'
 
-  if mail
-    title = "[Gmail] #{(mail/'title').text}"
-    get   = Time.parse (mail/'modified').text
+    mail = gmail.fetch(gmail.search(['UNSEEN']).last, 'ENVELOPE').first.attr['ENVELOPE']
+      logger.debug 'Checked'
 
-    if head < get
-      head = get
-      `curl -d 'message=#{title}' http://im.kayac.com/api/post/#{config[:username]}`
+    subject = mail.subject.toutf8
+    date = Time.parse mail.date
+      logger.debug "#{head} < #{date} #{subject}"
+
+    if head.nil? or head < date
+      head = date
+      `curl -d 'message=[Gmail] #{subject}' http://im.kayac.com/api/post/#{config[:username]}`
+        logger.info "Push to #{config[:username]}"
     end
-  end
 
-  sleep 30
+    sleep 30
+  end
+rescue Exception => e
+  logger.error "#{__FILE__}: #{__LINE__}L"
+  logger.error e.inspect
+ensure
+  gmail.logout
+    logger.info 'Logout Gmail'
+
+  gmail.disconnect
+    logger.info 'Disconnect Gmail'
 end
