@@ -8,7 +8,7 @@ Required
 - [Boxcar](http://boxcar.io/) Account, and add Growl (API) service.
 - Ruby 1.9.2
 - [Bundler](http://gembundler.com/)
-- See Gemfile
+- See [Gemfile](https://github.com/Tomohiro/pushr/blob/master/Gemfile)
 
 
 Screenshot
@@ -36,7 +36,12 @@ Getting Started
     $ nohup bundle exec ruby pushr.rb &
 
 
+Thanks
+--------------------------------------------------------------------------------
+
+- [Gmail Icon](http://wwalczyszyn.deviantart.com/) by [Wojciech Walczyszyn](http://wwalczyszyn.deviantart.com/)
+
 License
 --------------------------------------------------------------------------------
 
-See LICENSE
+See [LICENSE](https://github.com/Tomohiro/pushr/blob/master/LICENSE)
