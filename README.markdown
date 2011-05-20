@@ -16,8 +16,8 @@ Getting Started
 
 ### Installation
 
-    $ git clone git://github.com/Tomohiro/push_notification_gmail.git push_notification_gmail
-    $ cd push_notification_gmail
+    $ git clone git://github.com/Tomohiro/pushr.git pushr
+    $ cd pushr
     $ bundle install --path vendor/bundle
 
 
