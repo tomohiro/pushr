@@ -16,7 +16,7 @@ Getting Started
 
 ### Installation
 
-    $ git clone git://github.com/Tomohiro/pushr.git pushr
+    $ git clone git://github.com/Tomohiro/pushr.git
     $ cd pushr
     $ bundle install --path vendor/bundle
 
