@@ -12,8 +12,10 @@ require 'boxcar_api'
 ENV['EDITOR'] = 'vi' if ENV['EDITOR'].nil?
 
 config = Pit.get('push.gmail.com', :require => {
-  :email    => 'yourname@gmail.com',
-  :password => 'your password in gmail',
+  :email           => 'yourname@gmail.com',
+  :password        => 'your password in gmail',
+  :boxcar_email    => 'yourname@example.com',
+  :boxcar_password => 'your password in boxcar'
 })
 
 logger = Logger.new STDOUT
@@ -26,8 +28,8 @@ begin
   gmail.login config[:email], config[:password]
     logger.info "Login #{config[:email]}"
 
-  boxcar = BoxcarAPI::User.new config[:email], config[:password]
-    logger.info "Connect Boxcar #{config[:email]}"
+  boxcar = BoxcarAPI::User.new config[:boxcar_email], config[:boxcar_password]
+    logger.info "Connect Boxcar #{config[:boxcar_email]}"
 
   head = nil
 
@@ -46,13 +48,14 @@ begin
     mail = gmail.fetch(unseen.last, 'ENVELOPE').first.attr['ENVELOPE']
       logger.debug 'Checked'
 
+    from = mail.from.first.name.toutf8
     subject = mail.subject.toutf8
     date = Time.parse mail.date
       logger.debug "#{head} < #{date} #{subject}"
 
     if head.nil? or head < date
       head = date
-      res = boxcar.notify subject, 'Gmail', nil, 'https://gmail.com', 'http://walkondew.com/images/Gmail_icon.png'
+      res = boxcar.notify subject, from, nil, 'https://gmail.com', 'http://walkondew.com/images/Gmail_icon.png'
         logger.info res
     end
 
