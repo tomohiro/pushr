@@ -11,7 +11,7 @@ require 'boxcar_api'
 
 ENV['EDITOR'] = 'vi' if ENV['EDITOR'].nil?
 
-config = Pit.get('push.gmail.com', :require => {
+config = Pit.get('pushr', :require => {
   :email           => 'yourname@gmail.com',
   :password        => 'your password in gmail',
   :boxcar_email    => 'yourname@example.com',
