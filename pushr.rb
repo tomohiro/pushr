@@ -48,10 +48,10 @@ begin
     mail = gmail.fetch(unseen.last, 'ENVELOPE').first.attr['ENVELOPE']
       logger.debug 'Checked'
 
-    from = mail.from.first.name.toutf8
+    from    = mail.from.first.name.toutf8
     subject = mail.subject.toutf8
-    date = Time.parse mail.date
-      logger.debug "#{head} < #{date} #{subject}"
+    date    = Time.parse mail.date
+      logger.debug "#{head} < #{date} #{from} #{subject}"
 
     if head.nil? or head < date
       head = date
