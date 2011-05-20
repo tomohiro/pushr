@@ -5,7 +5,7 @@ Push Notification for Gmail to iPhone
 Required
 --------------------------------------------------------------------------------
 
-- [im.kayac.com](http://im.kayac.com/) Account
+- [Boxcar](http://boxcar.io/) Account, and add Growl (API) service.
 - Ruby 1.9.2
 - [Bundler](http://gembundler.com/)
 - See Gemfile
