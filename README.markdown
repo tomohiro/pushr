@@ -39,7 +39,7 @@ Getting Started
 Thanks
 --------------------------------------------------------------------------------
 
-- [Gmail Icon](http://wwalczyszyn.deviantart.com/) by [Wojciech Walczyszyn](http://wwalczyszyn.deviantart.com/)
+- [Gmail Icon](http://findicons.com/icon/450383/gmail) by [Wojciech Walczyszyn](http://wwalczyszyn.deviantart.com/)
 
 License
 --------------------------------------------------------------------------------
