@@ -21,19 +21,19 @@ Getting Started
 
 ### Installation
 
-    $ git clone git://github.com/Tomohiro/pushr.git
-    $ cd pushr
-    $ bundle install --path vendor/bundle
+    git clone git://github.com/Tomohiro/pushr.git
+    cd pushr
+    bundle install --path vendor/bundle
 
 
 ### Run
 
-    $ bundle exec ruby pushr.rb
+    bundle exec ruby pushr.rb
 
 
 ### Easy daemonize
 
-    $ nohup bundle exec ruby pushr.rb &
+    nohup bundle exec ruby pushr.rb &
 
 
 Thanks
