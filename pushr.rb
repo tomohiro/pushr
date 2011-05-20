@@ -40,7 +40,7 @@ begin
     unseen = gmail.search ['UNSEEN']
 
     if unseen.empty?
-      logger.info "No mail for #{config[:email]}"
+      logger.debug "No mail for #{config[:email]}"
       sleep 30
       next
     end
@@ -48,7 +48,7 @@ begin
     mail = gmail.fetch(unseen.last, 'ENVELOPE').first.attr['ENVELOPE']
       logger.debug 'Checked'
 
-    from    = mail.from.first.name.toutf8
+    from    = (mail.from.first.name || "#{mail.from.first.mailbox}@#{mail.from.first.host}").toutf8
     subject = mail.subject.toutf8
     date    = Time.parse mail.date
       logger.debug "#{head} < #{date} #{from} #{subject}"
