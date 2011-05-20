@@ -1,4 +1,4 @@
-Push Notification for Gmail to iPhone
+Pushr:  Push Notification for Gmail to iPhone
 ================================================================================
 
 
@@ -23,12 +23,12 @@ Getting Started
 
 ### Run
 
-    $ bundle exec ruby push_notification_gmail.rb
+    $ bundle exec ruby pushr.rb
 
 
 ### Easy daemonize
 
-    $ nohup bundle exec ruby push_notification_gmail.rb &
+    $ nohup bundle exec ruby pushr.rb &
 
 
 License
