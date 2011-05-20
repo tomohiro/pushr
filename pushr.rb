@@ -39,7 +39,7 @@ begin
 
     unseen = gmail.search ['UNSEEN']
 
-    if unseen.nil? or unseen == 0
+    if unseen.empty?
       logger.info "No mail for #{config[:email]}"
       sleep 30
       next
