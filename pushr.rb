@@ -55,7 +55,7 @@ begin
 
     if head.nil? or head < date
       head = date
-      res = boxcar.notify subject, from, nil, 'https://gmail.com', 'http://dl.dropbox.com/u/173097/gmail.png'
+      res = boxcar.notify subject, from, nil, 'https://gmail.com', 'http://dl.dropbox.com/u/173097/pushr/gmail.png'
         logger.info res
     end
 

@@ -14,7 +14,7 @@ Required
 Screenshot
 --------------------------------------------------------------------------------
 
-![Boxcar Image](http://dl.dropbox.com/u/173097/boxcar.png)
+![Boxcar Image](http://dl.dropbox.com/u/173097/pushr/boxcar_ss.png)
 
 Getting Started
 --------------------------------------------------------------------------------
