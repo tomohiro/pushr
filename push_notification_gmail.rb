@@ -1,19 +1,19 @@
 #!/usr/bin/env ruby
 
-require 'net/imap'
 require 'kconv'
 require 'time'
 require 'logger'
+require 'net/imap'
 
 require 'rubygems'
 require 'pit'
+require 'boxcar_api'
 
 ENV['EDITOR'] = 'vi' if ENV['EDITOR'].nil?
 
 config = Pit.get('push.gmail.com', :require => {
   :email    => 'yourname@gmail.com',
   :password => 'your password in gmail',
-  :username => 'your username in im.kayac.com'
 })
 
 logger = Logger.new STDOUT
@@ -26,13 +26,24 @@ begin
   gmail.login config[:email], config[:password]
     logger.info "Login #{config[:email]}"
 
+  boxcar = BoxcarAPI::User.new config[:email], config[:password]
+    logger.info "Connect Boxcar #{config[:email]}"
+
   head = nil
 
   loop do
     gmail.select 'INBOX'
       logger.debug 'Select inbox'
 
-    mail = gmail.fetch(gmail.search(['UNSEEN']).last, 'ENVELOPE').first.attr['ENVELOPE']
+    unseen = gmail.search ['UNSEEN']
+
+    if unseen.nil? or unseen == 0
+      logger.info "No mail for #{config[:email]}"
+      sleep 30
+      next
+    end
+
+    mail = gmail.fetch(unseen.last, 'ENVELOPE').first.attr['ENVELOPE']
       logger.debug 'Checked'
 
     subject = mail.subject.toutf8
@@ -41,8 +52,8 @@ begin
 
     if head.nil? or head < date
       head = date
-      `curl -d 'message=[Gmail] #{subject}' http://im.kayac.com/api/post/#{config[:username]}`
-        logger.info "Push to #{config[:username]}"
+      res = boxcar.notify subject, 'Gmail', nil, 'https://gmail.com', 'http://walkondew.com/images/Gmail_icon.png'
+        logger.info res
     end
 
     sleep 30
