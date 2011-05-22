@@ -3,7 +3,7 @@ require 'time'
 require 'net/imap'
 
 module Pushr
-  module Crawler
+  module Publisher
     class Gmail
       attr_reader :title, :source, :link, :icon
 

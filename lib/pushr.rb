@@ -1,8 +1,9 @@
+
 require 'ostruct'
 require 'rubygems'
 require 'pit'
 
-require 'pushr/server'
+require 'server'
 
 ENV['EDITOR'] = 'vi' if ENV['EDITOR'].nil?
 

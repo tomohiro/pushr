@@ -1,7 +1,7 @@
 require 'logger'
 
-require 'pushr/crawler/gmail'
-require 'pushr/publisher/boxcar'
+require 'publisher/gmail'
+require 'subscriber/boxcar'
 
 module Pushr
   class Server
@@ -16,11 +16,11 @@ module Pushr
 
     def run
       begin
-        @crawler   = Pushr::Crawler::Gmail.new $config
-        @publisher = Pushr::Publisher::Boxcar.new $config
+        @publisher  = Pushr::Publisher::Gmail.new $config
+        @subscriber = Pushr::Subscriber::Boxcar.new $config
 
         loop do
-          @crawler.start  { |info| @publisher.push info }
+          @publisher.start { |info| @subscriber.notify info }
           sleep 30
         end
 
