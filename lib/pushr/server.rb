@@ -20,12 +20,10 @@ module Pushr
         @publisher = Pushr::Publisher::Boxcar.new $config
 
         loop do
-          @crawler.start do |info|
-            @publisher.push info
-          end
-
+          @crawler.start  { |info| @publisher.push info }
           sleep 30
         end
+
       rescue Exception => e
         $logger.error e.inspect
       ensure

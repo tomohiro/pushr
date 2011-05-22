@@ -9,8 +9,8 @@ module Pushr
       end
 
       def push info
-        @boxcar.notify info[:subject], info[:from], nil, 'https://gmail.com', 'http://dl.dropbox.com/u/173097/pushr/gmail.png'
-          $logger.info "Push to Boxcar #{info[:subject]}"
+        @boxcar.notify info.title, info.source, nil, info.link, info.icon
+          $logger.info "Push to Boxcar #{info.title}"
       end
 
       def destruct

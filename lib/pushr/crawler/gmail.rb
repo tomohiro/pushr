@@ -5,6 +5,8 @@ require 'net/imap'
 module Pushr
   module Crawler
     class Gmail
+      attr_reader :title, :source, :link, :icon
+
       def initialize config
         @gmail = Net::IMAP.new 'imap.gmail.com', 993, true, nil, false
           $logger.info 'Connect to Gmail'
@@ -13,6 +15,10 @@ module Pushr
           $logger.info 'Login to Gmail'
 
         @head = nil
+        @title  = nil
+        @source = nil
+        @link   = 'https://gmail.com'
+        @icon   = 'http://dl.dropbox.com/u/173097/pushr/gmail.png'
       end
 
       def start
@@ -27,14 +33,11 @@ module Pushr
         date = Time.parse mail.date
 
         if @head.nil? or @head < date
-          @head = date
+          @head   = date
+          @title  = mail.subject.toutf8
+          @source = (mail.from.first.name || "#{mail.from.first.mailbox}@#{mail.from.first.host}").toutf8
 
-          info = {
-            :subject => mail.subject.toutf8,
-            :from    => (mail.from.first.name || "#{mail.from.first.mailbox}@#{mail.from.first.host}").toutf8
-          }
-
-          yield info
+          yield self
         end
       end
 
