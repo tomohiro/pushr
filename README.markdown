@@ -28,12 +28,12 @@ Getting Started
 
 ### Run
 
-    bundle exec ruby pushr.rb
+    bundle exec ruby pushr
 
 
 ### Easy daemonize
 
-    nohup bundle exec ruby pushr.rb &
+    nohup bundle exec ruby pushr &
 
 
 Thanks
