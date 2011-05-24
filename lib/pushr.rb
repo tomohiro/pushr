@@ -1,4 +1,4 @@
-
+require 'logger'
 require 'ostruct'
 require 'rubygems'
 require 'pit'
@@ -18,4 +18,10 @@ $config = OpenStruct.new(
 )
 
 module Pushr
+  def self.logger module_name
+    logger = Logger.new STDOUT
+    logger.level = Logger::INFO
+    logger.progname = module_name || Module.nesting.first
+    logger
+  end
 end
