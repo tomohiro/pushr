@@ -27,8 +27,8 @@ module Pushr
       rescue Exception => e
         $logger.error e.inspect
       ensure
-        @crawler.destruct
         @publisher.destruct
+        @subscriber.destruct
       end
     end
   end
