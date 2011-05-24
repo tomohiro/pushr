@@ -1,5 +1,6 @@
+require 'error_info'
+
 require 'publisher/gmail'
-require 'publisher/exception'
 require 'subscriber/boxcar'
 
 module Pushr
@@ -26,7 +27,7 @@ module Pushr
 
       rescue Exception => e
         @logger.error e.inspect
-        @subscriber.notify Pushr::Publisher::Exception.new e
+        @subscriber.notify Pushr::ErrorInfo.new e
       ensure
         @publisher.destruct
         @subscriber.destruct
