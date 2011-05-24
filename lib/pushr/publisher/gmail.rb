@@ -23,7 +23,7 @@ module Pushr
 
       def start
         @gmail.select 'INBOX'
-          $logger.info 'Select inbox'
+          $logger.debug 'Select inbox'
 
         unseen = @gmail.search ['UNSEEN']
 
