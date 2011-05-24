@@ -8,13 +8,15 @@ module Pushr
       attr_reader :title, :source, :link, :icon
 
       def initialize config
+        @logger = Pushr.logger Module.nesting.first
+
         @gmail = Net::IMAP.new 'imap.gmail.com', 993, true, nil, false
-          $logger.info 'Connect to Gmail'
+          @logger.info 'Connect'
 
         @gmail.login config.email, config.password
-          $logger.info 'Login to Gmail'
+          @logger.info 'Login'
 
-        @head = nil
+        @head   = nil
         @title  = nil
         @source = nil
         @link   = 'https://gmail.com'
@@ -23,7 +25,7 @@ module Pushr
 
       def start
         @gmail.select 'INBOX'
-          $logger.debug 'Select inbox'
+          @logger.debug 'Select inbox'
 
         unseen = @gmail.search ['UNSEEN']
 
@@ -43,10 +45,10 @@ module Pushr
 
       def destruct
         @gmail.logout
-          $logger.info 'Logout from Gmail'
+          @logger.info 'Logout'
 
         @gmail.disconnect
-          $logger.info 'Disconnect from Gmail'
+          @logger.info 'Disconnect'
 
         @gmail = nil
       end

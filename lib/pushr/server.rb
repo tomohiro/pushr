@@ -1,13 +1,11 @@
-require 'logger'
-
 require 'publisher/gmail'
+require 'publisher/exception'
 require 'subscriber/boxcar'
 
 module Pushr
   class Server
     def initialize
-      $logger = Logger.new STDOUT
-      $logger.level = Logger::INFO
+      @logger = Pushr.logger Module.nesting.first
     end
 
     def self.run
@@ -15,6 +13,8 @@ module Pushr
     end
 
     def run
+      @logger.info 'Run'
+
       begin
         @publisher  = Pushr::Publisher::Gmail.new $config
         @subscriber = Pushr::Subscriber::Boxcar.new $config
@@ -25,7 +25,8 @@ module Pushr
         end
 
       rescue Exception => e
-        $logger.error e.inspect
+        @logger.error e.inspect
+        @subscriber.notify Pushr::Publisher::Exception.new e
       ensure
         @publisher.destruct
         @subscriber.destruct
