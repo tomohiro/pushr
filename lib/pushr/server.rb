@@ -9,29 +9,27 @@ module Pushr
       @logger = Pushr.logger Module.nesting.first
     end
 
-    def self.run
-      self.new.run
-    end
-
     def run
       @logger.info 'Run'
 
-      begin
-        @publisher  = Pushr::Publisher::Gmail.new $config
-        @subscriber = Pushr::Subscriber::Boxcar.new $config
+      @publisher  = Pushr::Publisher::Gmail.new $config
+      @subscriber = Pushr::Subscriber::Boxcar.new $config
 
-        loop do
-          @publisher.start { |info| @subscriber.notify info }
-          sleep 30
-        end
-
-      rescue Exception => e
-        @logger.error e.inspect
-        @subscriber.notify Pushr::ErrorInfo.new e
-      ensure
-        @publisher.destruct
-        @subscriber.destruct
+      loop do
+        @publisher.start { |info| @subscriber.notify info }
+        sleep 30
       end
+
+    rescue Exception => e
+      @logger.error e
+      @subscriber.notify Pushr::ErrorInfo.new e
+    ensure
+      @publisher.destruct
+      @subscriber.destruct
+    end
+
+    def self.run
+      self.new.run
     end
   end
 end

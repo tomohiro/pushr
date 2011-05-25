@@ -41,6 +41,8 @@ module Pushr
 
           yield self
         end
+      rescue Net::IMAP::Error => e
+        @logger.error e
       end
 
       def destruct
