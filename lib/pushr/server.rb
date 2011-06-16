@@ -22,7 +22,9 @@ module Pushr
 
     rescue Exception => e
       @logger.error e
-      @subscriber.notify Pushr::ErrorInfo.new e
+      @subscriber.notify "#{Pushr::ErrorInfo.new e}. Retry after 300 seconds"
+      sleep 300
+      retry
     ensure
       @publisher.destruct
       @subscriber.destruct
