@@ -27,6 +27,7 @@ module Pushr
       ensure
         @publisher.destruct
         @subscriber.destruct
+      end
     end
 
     def self.run
