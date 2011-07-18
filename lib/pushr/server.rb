@@ -21,7 +21,7 @@ module Pushr
 
       rescue Exception => e
         @logger.error e
-        @logger.error e 'Retry after 300 seconds'
+        @logger.error 'Retry after 300 seconds'
         sleep 300
         retry
       ensure
